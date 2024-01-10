@@ -1,0 +1,60 @@
+.box-chat-request {
+  border: 1px solid $main-clr;
+  border-radius:10px;
+}
+.chat-request-profile {
+  width: 10%;
+}
+
+.chat-request-deatails-profile {
+  border-bottom: 1px solid $main-clr;
+}
+
+
+
+.chat-request-field {
+  border-top: 1px solid $main-clr;
+  border-radius: 10px;
+  input {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  svg {
+    color: $main-clr;
+    transform: scale(1.5);
+    margin: 10px;
+  }
+}
+
+
+.btn-tacker {
+  width: 600px;
+  button {
+    width: 100%;
+
+  }
+}
+
+.btn-submit-dashborad-none-bg {
+  background-color: white !important;
+  border: 1px solid $main-clr !important;
+  color: $main-clr !important;
+}
+
+
+
+.btn-cancel-dashborad {
+  background-color: $red-clr !important;
+  width: 100%;
+}
+
+.success-steps {
+  button {
+    border: 1px solid $gray-clr;
+    color: $gray-clr;
+    background-color: white;
+    font-size: 1.2rem;
+    width: 200px;
+  }
+}

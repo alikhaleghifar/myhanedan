@@ -1,0 +1,19 @@
+.btn-ok{
+  background-color: $main-clr;
+  color: white;
+  border-radius: 10px;
+  border: none;
+}
+.btn-cancel{
+  background-color: $red-clr;
+  color: white;
+  border-radius: 10px;
+  border: none;
+}
+.btn-none-bg{
+  background-color: white;
+  color: $main-clr;
+  border-radius: 10px;
+  border: 1px solid $main-clr;
+
+}

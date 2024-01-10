@@ -1,0 +1,11 @@
+@media only screen and (max-width: 1024px) {
+  .form-modal-content-request {
+    flex-direction: column;
+  }
+.modal-request-detail-content {
+  width: 100%;
+}
+  .modal-request-detail-content-column {
+    flex-direction: column;
+  }
+}

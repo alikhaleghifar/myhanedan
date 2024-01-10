@@ -1,0 +1,129 @@
+
+.ReactModal__Overlay {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.ReactModalPortal:nth-child(1) {
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.modal-option {
+  /* fixed position will always show modal in the top left corner */
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* z-index to show modal even if it is used before some other elements */
+  z-index: 1000;
+  /* make modal fill whole window */
+  width: 100vw;
+  height: 100vh;
+  /* add some background to blur content behind modal */
+  // background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(10px);
+  /* center content inside modal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.compoenent-modal-option {
+  background-color: $main-clr;
+  border: 1px solid white;
+  border-radius: 20px ;
+  max-width: 1366px;
+  width: 50%;
+}
+
+.modal-option-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 20px;
+  h1 {
+
+    font-size: 1.1em;
+  }
+  i {
+
+    font-size: 2em;
+  }
+}
+
+
+.modal-content {
+  padding: 20px;
+}
+
+.form-modal-content {
+  // padding: 10px;
+
+}
+
+.container-box-input-form-modal-content-50 {
+  display: flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modal-components-background{
+  position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.modal-components-warpper {
+  background-color: white;
+  border-radius: 20px;
+  max-width: 1366px;
+  width: 100%;
+  overflow: auto;
+  max-height: 80vh;
+}
+
+.modal-components-background-content {
+  width:55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+@media all and (max-width : 1024px) {
+  .modal-components-background-content {
+    width: 90%;
+  }
+  .compoenent-modal-option {
+    width: 90%;
+  }
+  .box-input-form-modal-content-50 {
+    width: 100%;
+  }
+  .container-box-input-form-modal-content-50 {
+    flex-direction: column;
+  }
+}

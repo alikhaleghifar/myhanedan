@@ -1,0 +1,93 @@
+@mixin rounded-corners($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+.off-screen {
+  height: 1px;
+  left: -50000px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+// PROGRESS BAR
+#progress-bar {
+  position: relative;
+  padding-top: 50px;
+  margin-bottom: 30px;
+  color:white;
+  #progress-steps {
+    height: 8px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+    @include rounded-corners(4px);
+    background-color: $main-low-clr;
+    position: relative;
+    list-style-type: none;
+    counter-reset: item;
+  }
+  .progress-step {
+    // Width set by JS
+    width: 16.66%;
+    height: 8px;
+    float: left;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .count:before {
+    content: counter(item) " ";
+    counter-increment: item;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    background-color: $main-low-clr;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    left: -6px;
+    /* padding: 2px 0 0 11px; */
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  .highlight-index:before {
+    background-color: $main-clr;
+    color: $main-low-clr;
+  }
+  .highlight-index {
+    background-color: $main-clr;
+    display: block;
+    height: 100%;
+    @include rounded-corners(4px);
+  }
+  .description-title {
+    display: block;
+    width: 100%;
+    left: 6%;
+    position: absolute;
+    bottom: 15px;
+    font-size: 1em;
+    font-weight: bold;
+    color: black;
+  }  .description {
+         display: block;
+         width: 100%;
+         left: 6%;
+         position: absolute;
+         bottom: -24px;
+         font-size: 0.8em;
+  }
+  .bolded-step {
+    font-weight: normal !important;
+  }
+}

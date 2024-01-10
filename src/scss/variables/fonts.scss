@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'sf-ui-display';
+  src: url('../fonts/sf-ui-display-medium.otf');
+  src:  url('../fonts/sf-ui-display-medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'sf-ui-display-light';
+  src: url('../fonts/SF UI Display Light.otf');
+  src:  url('../fonts/SF UI Display Light.woff') format('woff');
+}
+$font-family-main: 'sf-ui-display';
+//$font-family-main: bold 1rem sf-ui-display-light;
