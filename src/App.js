@@ -4,6 +4,7 @@ import {Home} from "./page/home";
 import {TrackerTransportation} from "./page/trackerTransportation";
 import "react-toastify/dist/ReactToastify.css";
 import {TransportPayment} from "./page/transportPayment";
+import StepCounter from "./page/stepCounter";
 // import 'leaflet/dist/leaflet.css';
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/TrackerTransportation" element={<TrackerTransportation/>} />
       <Route path="/TransportPayment" element={<TransportPayment/>} />
+      <Route path="/StepCounter" element={<StepCounter/>} />
       {/*<Route path="/calculator" element={<Calculator/>} />*/}
       {/*<Route path="/calculatorHome" element={<CalculatorHome/>} />*/}
       {/*<Route path="/calculatorCar" element={<CalculatorCar/>} />*/}
