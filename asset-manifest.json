@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3de245bf.css",
+    "main.js": "/static/js/main.aa8b5a0c.js",
+    "static/js/787.8a53480c.chunk.js": "/static/js/787.8a53480c.chunk.js",
+    "static/media/bghaeder.jpg": "/static/media/bghaeder.3f37004d5ca0e9acd902.jpg",
+    "static/media/MTNIrancell-Light.woff": "/static/media/MTNIrancell-Light.a3fcbbdf01ea34341e3e.woff",
+    "static/media/MTNIrancell-Bold.woff": "/static/media/MTNIrancell-Bold.c31c95ddb15d25482e2f.woff",
+    "static/media/tracker.png": "/static/media/tracker.6692fa7a292626cf9cee.png",
+    "index.html": "/index.html",
+    "main.3de245bf.css.map": "/static/css/main.3de245bf.css.map",
+    "main.aa8b5a0c.js.map": "/static/js/main.aa8b5a0c.js.map",
+    "787.8a53480c.chunk.js.map": "/static/js/787.8a53480c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3de245bf.css",
+    "static/js/main.aa8b5a0c.js"
+  ]
+}
