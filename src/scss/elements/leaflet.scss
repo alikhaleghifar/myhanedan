@@ -1,0 +1,21 @@
+.leaflet-container {
+    height: 300px !important;
+}
+
+.leaflet-touch .leaflet-control-layers-toggle {
+    width: 25px;
+    height: 25px;
+    //background-image: url("../../asset/image/layermap.png");
+    padding: 5px;
+}
+
+.leaflet-control-layers-base {
+    span {
+        font-family: $font-family-main;
+    }
+}
+
+
+.leaflet-control-attribution {
+    display: none;
+}

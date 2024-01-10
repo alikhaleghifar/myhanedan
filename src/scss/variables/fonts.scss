@@ -1,13 +1,12 @@
 @font-face {
-  font-family: 'sf-ui-display';
-  src: url('../fonts/sf-ui-display-medium.otf');
-  src:  url('../fonts/sf-ui-display-medium.woff') format('woff');
+  font-family: 'myhamedan';
+  // src: url('../fonts/bd84acf61e0af29bab6db956e6182bf0.eot');
+  src: url('../fonts/MTNIrancell-Light.woff') format('woff');
 }
-
 @font-face {
-  font-family: 'sf-ui-display-light';
-  src: url('../fonts/SF UI Display Light.otf');
-  src:  url('../fonts/SF UI Display Light.woff') format('woff');
+  font-family: 'myhamedanBold';
+  // src: url('../fonts/bd84acf61e0af29bab6db956e6182bf0.eot');
+  src: url('../fonts/MTNIrancell-Bold.woff') format('woff');
 }
-$font-family-main: 'sf-ui-display';
-//$font-family-main: bold 1rem sf-ui-display-light;
+$font-family-main: 'myhamedan';
+$font-family-main-bold: 'myhamedanBold';
