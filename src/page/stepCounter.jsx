@@ -18,12 +18,14 @@ import foot from "../assets/image/icon/foot.png"
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import Loading from "../components/loading";
 
 
 
 
 
 export default function  StepCounter() {
+    const [loading, setLoading] = useState(false)
     const [marker, setMarker] = useState();
     const [markerP, setMarkerP] = useState();
     const [status, setStatus] = useState("1");
@@ -117,6 +119,7 @@ export default function  StepCounter() {
 
 
     const handlerSubmit = () => {
+        setLoading(true)
         if (status === "1"){
             axios
                 .post(`http://181.41.194.224:7070/user/start_walk/`,{
@@ -130,9 +133,11 @@ export default function  StepCounter() {
                 })
                 .then((res) => {
 setStatus("2")
+                    setLoading(false)
                     setUloc_id(res.data.uloc_id)
                 })
                 .catch((error) => {
+                    setLoading(false)
                     toast.error("خطا در ازتباط با سرور", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -153,9 +158,11 @@ setStatus("2")
                     toast.success(`مقدار ${res.data.tokens_gained}به امتیازات اضافه شد`, {
                         position: toast.POSITION.TOP_RIGHT,
                     });
+                    setLoading(false)
                     navigate("/")
                 })
                 .catch((error) => {
+                    setLoading(false)
                     toast.error("خطا در ازتباط با سرور", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
@@ -165,6 +172,7 @@ setStatus("2")
     }
     return (
         <>
+            {loading? <Loading/> : null}
             <div className="w-full flex justify-center">
 
 

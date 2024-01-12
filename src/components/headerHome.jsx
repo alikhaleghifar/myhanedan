@@ -6,6 +6,7 @@ import Confirm from "./modals/confirm";
 
 import {  toast } from 'react-toastify';
 import {useNavigate} from "react-router-dom";
+import Loading from "./loading";
 
 
 export default function HeaderHome() {
@@ -18,6 +19,9 @@ export default function HeaderHome() {
             navigate("/login")
         }
     }, []);
+
+
+    const [loading, setLoading] = useState(false)
 
 
     const [wallet, setWallet] = useState({
@@ -36,21 +40,23 @@ export default function HeaderHome() {
 
 
     const getData = () => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/user/show_wallet/`,{
                 uid:uid
             })
             .then((res) => {
                 setWallet(res.data)
-                // setLoading(false)
+                setLoading(false)
             })
             .catch((error) => {
-                // setLoading(false)
+                setLoading(false)
 
             });
     }
 
     const handlerSubmit = (value) => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/user/deposit_wallet/`,{
                 uid:uid,
@@ -61,10 +67,11 @@ export default function HeaderHome() {
                 toast.success("با موفقیت انجام شد", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
+                setLoading(false)
             })
             .catch((error) => {
                 // setLoading(false)
-                // setLoading(false)
+                setLoading(false)
                 toast.error("خطا در ارتباط با سرور", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
@@ -73,6 +80,7 @@ export default function HeaderHome() {
 
     return (
         <>
+            {loading? <Loading/> : null}
             <Confirm showModal={showModal} setShowModal={setShowModal} handelerSubmit={handlerSubmit} />
             <div className="w-full  main-header-home p-4 relative flex justify-center pb-16">
                 <div className="w-full flex justify-between items-center">
@@ -102,7 +110,7 @@ export default function HeaderHome() {
 
                             </p>
                             <p className="text-center p-2">
-                                {wallet.user_wallet.money_balance} هزار تومان
+                                {parseInt(wallet.user_wallet.money_balance)} هزار تومان
                             </p>
                         </div>
 
@@ -119,7 +127,7 @@ export default function HeaderHome() {
                             <div className="p-2 flex items-center">
                                 <img className="m-1" src={point} width={"20px"} alt={"icon"}/>
                                 <p className="m-1">
-                                    {wallet.user_wallet.token_balance}
+                                    {parseInt(wallet.user_wallet.token_balance)}
                                 </p>
 
                             </div>

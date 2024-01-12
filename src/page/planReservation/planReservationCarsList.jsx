@@ -3,6 +3,7 @@ import axios from "axios";
 import {NavbarPages} from "../../components/navbarPages";
 import AddCar from "../../components/modals/addCar";
 import {useNavigate} from "react-router-dom";
+import Loading from "../../components/loading";
 
 
 
@@ -13,7 +14,7 @@ function replaceX(originalString, replacementString) {
 
 
 export const PlanReservationCarsList = () => {
-
+    const [loading, setLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const uid = JSON.parse(localStorage.getItem("uid"));
     const navigate = useNavigate()
@@ -31,16 +32,17 @@ export const PlanReservationCarsList = () => {
 
 
     const getData = () => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/user/show_cars/`,{
                 uid:uid
             })
             .then((res) => {
                 setData(res.data.user_cars)
-                // setLoading(false)
+                setLoading(false)
             })
             .catch((error) => {
-                // setLoading(false)
+                setLoading(false)
 
             });
     }
@@ -48,6 +50,7 @@ export const PlanReservationCarsList = () => {
     const navigator = useNavigate();
     return (
         <>
+            {loading? <Loading/> : null}
             <AddCar setShowModal={setShowModal} showModal={showModal} loadData={getData} />
             <main className="w-full flex justify-center">
                 <div className="max-w-container w-full">

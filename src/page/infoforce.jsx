@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {NavbarPages} from "../components/navbarPages";
 import {toast} from "react-toastify";
 

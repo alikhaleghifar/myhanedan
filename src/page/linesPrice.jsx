@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {NavbarPages} from "../components/navbarPages";
 import {toast} from "react-toastify";
+import Loading from "../components/loading";
 
 
 function filterByVehichle(data, targetVehichle) {
@@ -10,7 +11,7 @@ function filterByVehichle(data, targetVehichle) {
 
 export const LinesPrice = () => {
 
-
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState([])
     const [dataFilter, setDataFilter] = useState([])
 
@@ -20,15 +21,16 @@ export const LinesPrice = () => {
 
 
     const getData = () => {
+        setLoading(true)
         axios
             .get(`http://181.41.194.224:7070/lines/prices/`)
             .then((res) => {
                 setData(res.data.line_prices)
                 // setDataFilter(res.data.line_prices)
-                // setLoading(false)
+                setLoading(false)
             })
             .catch((error) => {
-                // setLoading(false)
+                setLoading(false)
 
             });
     }
@@ -36,7 +38,7 @@ export const LinesPrice = () => {
 
     return (
         <>
-
+            {loading? <Loading/> : null}
             <main className="w-full flex justify-center">
                 <div className="max-w-container w-full">
                     <NavbarPages title={"مشاهده نرخ حمل و نقل"} url={-1}/>

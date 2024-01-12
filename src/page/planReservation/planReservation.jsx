@@ -4,6 +4,7 @@ import {NavbarPages} from "../../components/navbarPages";
 import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import AddCar from "../../components/modals/addCar";
+import Loading from "../../components/loading";
 
 
 function replaceX(originalString, replacementString) {
@@ -13,7 +14,7 @@ function replaceX(originalString, replacementString) {
 
 
 export const PlanReservation = () => {
-
+    const [loading, setLoading] = useState(false)
     const {id} = useParams();
     const [data, setData] = useState([])
     const uid = JSON.parse(localStorage.getItem("uid"));
@@ -30,14 +31,15 @@ export const PlanReservation = () => {
 
 
     const getData = () => {
+        setLoading(true)
         axios
             .get(`http://181.41.194.224:7070/traffic_plan/available_timetable/`)
             .then((res) => {
                 setData(res.data.timetable)
-                // setLoading(false)
+                setLoading(false)
             })
             .catch((error) => {
-                // setLoading(false)
+                setLoading(false)
 
             });
     }
@@ -53,6 +55,7 @@ export const PlanReservation = () => {
 
 
     const handlerSubmit = (currency) => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/traffic_plan/buy/`,{
 
@@ -64,7 +67,7 @@ export const PlanReservation = () => {
 
             })
             .then((res) => {
-
+                setLoading(false)
                 if (res.data.status) {
                     toast.success("پرداخت با موفقیت انجام شد", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -78,6 +81,7 @@ export const PlanReservation = () => {
                 // setLoading(false)
             })
             .catch((error) => {
+                setLoading(false)
                 toast.error("پرداخت انجام نشد", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
@@ -87,7 +91,7 @@ export const PlanReservation = () => {
 
     return (
         <>
-
+            {loading? <Loading/> : null}
             <main className="w-full flex justify-center">
                 <div className="max-w-container w-full">
                     <NavbarPages title={"رزرو طرح"} url={-1}/>

@@ -3,10 +3,11 @@ import axios from "axios";
 import {NavbarPages} from "../components/navbarPages";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import Loading from "../components/loading";
 
 
 export const UsePoints = () => {
-
+    const [loading, setLoading] = useState(false)
     const uid = JSON.parse(localStorage.getItem("uid"));
     const navigate = useNavigate()
     useEffect(() => {
@@ -16,6 +17,7 @@ export const UsePoints = () => {
     }, []);
 
     const handlerSubmit = (value) => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/user/pay_driver/`,{
 
@@ -27,7 +29,7 @@ export const UsePoints = () => {
 
             })
             .then((res) => {
-
+                setLoading(false)
                 if (res.data.status) {
                     toast.success("پرداخت با موفقیت انجام شد", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -41,6 +43,7 @@ export const UsePoints = () => {
                 // setLoading(false)
             })
             .catch((error) => {
+                setLoading(false)
                 toast.error("پرداخت انجام نشد", {
                     position: toast.POSITION.TOP_RIGHT,
                 });
@@ -50,7 +53,7 @@ export const UsePoints = () => {
 
     return (
         <>
-
+            {loading? <Loading/> : null}
             <main className="w-full flex justify-center">
                 <div className="max-w-container w-full">
                     <NavbarPages title={"رویداد ها"} url={-1}/>

@@ -2,18 +2,19 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {toast} from 'react-toastify';
+import Loading from "../components/loading";
 
 
 function Register() {
     useEffect(() => {
         localStorage.clear();
     }, []);
-
+    const [loading, setLoading] = useState(false)
     const [addData, setAddData] = useState({});
     let navigate = useNavigate();
     const handlerSubmit = (e) => {
         e.preventDefault();
-
+        setLoading(true)
         axios
             .post("http://181.41.194.224:7070/register", {
                 name_surname: addData.name_surname,
@@ -29,11 +30,11 @@ function Register() {
                     })
                     .then((res) => {
                         navigate(`/confirmLogin/${addData.phone_number}`)
-
+                        setLoading(false)
 
                     })
                     .catch((error) => {
-
+                        setLoading(false)
 
                     });
 
@@ -41,7 +42,7 @@ function Register() {
 
             })
             .catch((error) => {
-
+                setLoading(false)
 
             });
     }
@@ -66,6 +67,7 @@ function Register() {
 
     return (
         <>
+            {loading? <Loading/> : null}
             <div className="login">
                 <section className="container">
                     <div className="login-container">

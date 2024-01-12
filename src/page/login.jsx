@@ -2,25 +2,26 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {  toast } from 'react-toastify';
+import Loading from "../components/loading";
 
 
 function Login() {
     useEffect(() => {
         localStorage.clear();
     }, []);
-
+    const [loading, setLoading] = useState(false)
     const [addData, setAddData] = useState({});
     let navigate = useNavigate();
     const handlerSubmit = (e) => {
         e.preventDefault();
-
+        setLoading(true)
         axios
             .post("http://181.41.194.224:7070/send_sms_code/",{
                 phone_number:addData.phone_number,
 
             })
             .then((res) => {
-
+                setLoading(false)
                 if (res.data.isLoggedIn === false){
                     toast.error("شماره همراه اشتباه است", {
                         position: toast.POSITION.TOP_RIGHT,
@@ -36,7 +37,7 @@ function Login() {
 
             })
             .catch((error) => {
-
+                setLoading(false)
 
             });
     }
@@ -56,6 +57,7 @@ function Login() {
 
     return (
         <>
+            {loading? <Loading/> : null}
             <div className="login">
                 <section className="container">
                     <div className="login-container">

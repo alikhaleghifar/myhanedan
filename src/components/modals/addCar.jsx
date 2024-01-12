@@ -5,6 +5,7 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import {useSpring, animated} from "react-spring";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Loading from "../loading";
 
 
 const AddCar = ({showModal, setShowModal,loadData}) => {
@@ -42,7 +43,7 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
     }, [keyPress]);
 
     // END MODAL
-
+    const [loading, setLoading] = useState(false)
     const [data, setData] = useState({plate_letter:"ا"})
     const uid = JSON.parse(localStorage.getItem("uid"));
     const navigate = useNavigate()
@@ -78,6 +79,7 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
     };
 
     const handelerSubmit = () => {
+        setLoading(true)
         axios
             .post(`http://181.41.194.224:7070/user/add_car/`, {
                 uid: uid,
@@ -88,10 +90,10 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
             .then((res) => {
                 loadData()
                 setShowModal(false)
-                // setLoading(false)
+                setLoading(false)
             })
             .catch((error) => {
-                // setLoading(false)
+                setLoading(false)
 
             });
     }
@@ -99,7 +101,7 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
     return (
         <>
 
-
+            {loading? <Loading/> : null}
             {showModal ? (
 
                 <div

@@ -2,19 +2,20 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {  toast } from 'react-toastify';
+import Loading from "../components/loading";
 
 
 function ConfirmLogin() {
     useEffect(() => {
         localStorage.clear();
     }, []);
-
+    const [loading, setLoading] = useState(false)
     const [addData, setAddData] = useState({});
     let navigate = useNavigate();
     const {number} = useParams();
     const handlerSubmit = (e) => {
         e.preventDefault();
-
+        setLoading(true)
         axios
             .post("http://181.41.194.224:7070/verify_sms_code/",{
                 code:parseInt(addData.code) ,
@@ -25,12 +26,12 @@ function ConfirmLogin() {
 
                     localStorage.setItem("uid", JSON.stringify(res.data.uid))
                     navigate("/")
-
+                setLoading(false)
 
             })
             .catch((error) => {
 
-
+                setLoading(false)
             });
     }
 
@@ -49,6 +50,7 @@ function ConfirmLogin() {
 
     return (
         <>
+            {loading? <Loading/> : null}
             <div className="login">
                 <section className="container">
                     <div className="login-container">
