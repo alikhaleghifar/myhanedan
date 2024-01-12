@@ -15,6 +15,7 @@ import {UsePoints} from "./usePoints";
 
 export const Home = () => {
     let navigate = useNavigate();
+
     return (
         <>
 
@@ -23,19 +24,12 @@ export const Home = () => {
                     <HeaderHome/>
 
 
-                    <section className="flex flex-col mt-16">
+                    <section className="flex flex-col mt-20">
                         <div className="w-full flex">
-                            <div className="flex flex-col w-50  m-2 p-2  items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/TrackerTransportation")
-                            }}>
-                                <img src={trackerTransportationImg} width={"50px"} alt="icon"/>
-                                <p className="m-2">
-                                    مشاهده آنلاین حمل ونقل
-                                </p>
-                            </div>
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/PlanReservationCarsList")
-                            }}>
+                            <div className="flex flex-col w-full  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/PlanReservationCarsList")
+                                 }}>
                                 <img src={rezerv} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     رزرو طرح
@@ -43,17 +37,43 @@ export const Home = () => {
                             </div>
                         </div>
                         <div className="w-full flex">
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/TransportPayment")
-                            }}>
+                            <div className="flex flex-col w-full  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/TransportPayment")
+                                 }}>
                                 <img src={payment} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     پرداخت کرایه
                                 </p>
                             </div>
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/LinesPrice")
-                            }}>
+                        </div>
+                        <div className="w-full flex">
+                            <div className="flex flex-col w-full  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/StepCounter")
+                                 }}>
+                                <img src={pedometer} width={"50px"} alt="icon"/>
+                                <p className="m-2">
+                                    قدم شمار
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div className="w-full flex">
+                            <div className="flex flex-col w-50  m-2 p-2  items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/TrackerTransportation")
+                                 }}>
+                                <img src={trackerTransportationImg} width={"50px"} alt="icon"/>
+                                <p className="m-2">
+                                    مشاهده آنلاین حمل ونقل
+                                </p>
+                            </div>
+                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/LinesPrice")
+                                 }}>
                                 <img src={nerkh} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     مشاهده نرخ حمل و نقل
@@ -61,17 +81,19 @@ export const Home = () => {
                             </div>
                         </div>
                         <div className="w-full flex">
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/Events")
-                            }}>
+                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/Events")
+                                 }}>
                                 <img src={events} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     رویدادها
                                 </p>
                             </div>
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"  onClick={()=>{
-                                navigate("/TimeTableStops")
-                            }}>
+                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/TimeTableStops")
+                                 }}>
                                 <img src={time} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     زمان ایستگاه ها
@@ -79,24 +101,16 @@ export const Home = () => {
                             </div>
                         </div>
                         <div className="w-full flex">
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/StepCounter")
-                            }}>
-                                <img src={pedometer} width={"50px"} alt="icon"/>
-                                <p className="m-2">
-                                    قدم شمار
-                                </p>
-                            </div>
-                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10" onClick={()=>{
-                                navigate("/Infoforce")
-                            }}>
+
+                            <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"
+                                 onClick={() => {
+                                     navigate("/Infoforce")
+                                 }}>
                                 <img src={info} width={"50px"} alt="icon"/>
                                 <p className="m-2">
                                     اطلاعات ضروری
                                 </p>
                             </div>
-                        </div>
-                        <div className="w-full flex">
                             <div className="flex flex-col w-50  m-2 p-2 items-center green-low-clr-bg bd-10"
                                  onClick={() => {
                                      navigate("/UsePoints")
@@ -106,10 +120,8 @@ export const Home = () => {
                                     استفاده ار امتیازات
                                 </p>
                             </div>
-                            <div className="flex flex-col w-50  m-2 p-2 items-center">
-
-                            </div>
                         </div>
+
                     </section>
 
                 </div>

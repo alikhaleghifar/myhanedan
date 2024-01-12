@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import QrReader from "react-qr-reader";
 import { useState } from "react";
 import axios from "axios";
 import {NavbarPages} from "../components/navbarPages";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -16,6 +17,13 @@ export const TransportPayment = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
     const handleScan = async (scanData) => {
 
@@ -41,7 +49,7 @@ export const TransportPayment = () => {
         axios
             .post(`http://181.41.194.224:7070/user/pay_driver/`,{
 
-                uid: 1,
+                uid: uid,
                 currency:currency,
                 price: currency === "token" ? precScan.price_token : precScan.price_money,
                 driver_id: precScan.driver_id,

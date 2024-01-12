@@ -23,7 +23,7 @@ function ConfirmLogin() {
             })
             .then((res) => {
 
-                    localStorage.setItem("user", JSON.stringify(res.data.isLoggedIn))
+                    localStorage.setItem("uid", JSON.stringify(res.data.uid))
                     navigate("/")
 
 

@@ -15,6 +15,9 @@ import {divIcon} from "leaflet/src/layer";
 import {NavbarPages} from "../components/navbarPages";
 
 import foot from "../assets/image/icon/foot.png"
+import axios from "axios";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -23,7 +26,16 @@ import foot from "../assets/image/icon/foot.png"
 export default function  StepCounter() {
     const [marker, setMarker] = useState();
     const [markerP, setMarkerP] = useState();
-    const position = [32.20274300043338, 54.15246922688382];
+    const [status, setStatus] = useState("1");
+    const [uloc_id, setUloc_id] = useState("");
+    const position = [34.7834699744819, 48.51227656733467];
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
     useEffect(() => {
         localStorage.setItem(
@@ -103,8 +115,53 @@ export default function  StepCounter() {
     };
 
 
+
     const handlerSubmit = () => {
-        
+        if (status === "1"){
+            axios
+                .post(`http://181.41.194.224:7070/user/start_walk/`,{
+
+
+                uid: uid,
+                start_lat: 34.7834699744819,
+                start_long: 48.51227656733467
+
+
+                })
+                .then((res) => {
+setStatus("2")
+                    setUloc_id(res.data.uloc_id)
+                })
+                .catch((error) => {
+                    toast.error("خطا در ازتباط با سرور", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                });
+        }else {
+            axios
+                .post(`http://181.41.194.224:7070/user/end_walk/`,{
+
+
+                    uloc_id: uloc_id,
+                    end_lat: 34.776205051772564,
+                    end_long: 48.51227656733467
+
+
+
+                })
+                .then((res) => {
+                    toast.success(`مقدار ${res.data.tokens_gained}به امتیازات اضافه شد`, {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                    navigate("/")
+                })
+                .catch((error) => {
+                    toast.error("خطا در ازتباط با سرور", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                });
+        }
+
     }
     return (
         <>
@@ -114,9 +171,7 @@ export default function  StepCounter() {
 
                 <div className="max-w-container w-full">
                     <NavbarPages title={"قدم شمار"} url={-1}/>
-                    <p className="m-2 p-2">
-                        لطفا ابتدا دونقطه شروع و پایان را در نقشه با کلیک کردن روی نقشه انتخاب کنید
-                    </p>
+
                     <p className="m-2 p-2 red-clr">
                        هر 1 متر دو قدم محاسبه می باشد
                     </p>
@@ -125,19 +180,36 @@ export default function  StepCounter() {
 
                         </div>
 
-                        <MapContainer center={position} zoom={3.48} scrollWheelZoom={true}>
+                        <MapContainer center={position} zoom={13.48} scrollWheelZoom={true}>
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
 
-                            {marker}
-                            {markerP}
-                            <LocationMarker/>
+
+                            {/*<LocationMarker/>*/}
+
+                             <Marker
+                                position={[34.7834699744819,48.51227656733467]}
+                                icon={customMarkerIcon}
+                            >
+                            </Marker>
+
+
+                            {
+                                status === "2" ? <Marker
+                                    position={[34.776205051772564,48.51227656733467]}
+                                    icon={customMarkerIcon}
+                                >
+                                </Marker> : null
+                            }
+
 
                         </MapContainer>
-                        <button className="btn-ok w-90 p-2 m-2"  onClick={handlerSubmit}>
-                            ثبت
+                        <button className="btn-ok w-90 p-2 m-2"  onClick={()=>{
+                            handlerSubmit()
+                        }}>
+                            {status === "1"?"شروع" : "پایان" }
                         </button>
 
                     </div>

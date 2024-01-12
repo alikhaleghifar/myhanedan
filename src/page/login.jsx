@@ -15,14 +15,14 @@ function Login() {
         e.preventDefault();
 
         axios
-            .post("http://188.121.105.111:3010/login",{
-                phoneNumber:addData.phoneNumber,
-                password:addData.password
+            .post("http://181.41.194.224:7070/send_sms_code/",{
+                phone_number:addData.phone_number,
+
             })
             .then((res) => {
 
                 if (res.data.isLoggedIn === false){
-                    toast.error("شماره همراه یا رمز عبور اشتباه است", {
+                    toast.error("شماره همراه اشتباه است", {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }else if (res.data.isLoggedIn === "notActive"){
@@ -30,8 +30,8 @@ function Login() {
                         position: toast.POSITION.TOP_RIGHT,
                     });
                 }else {
-                    localStorage.setItem("user", JSON.stringify(res.data.isLoggedIn))
-                    navigate("/")
+
+                    navigate(`/confirmLogin/${addData.phone_number}`)
                 }
 
             })
@@ -44,12 +44,10 @@ function Login() {
 
     const setQueryPropertyAddData = (key, e) => {
         switch (key) {
-            case "phoneNumber":
-                setAddData({...addData, phoneNumber: e.target.value});
+            case "phone_number":
+                setAddData({...addData, phone_number: e.target.value});
                 break;
-            case "password":
-                setAddData({...addData, password: e.target.value});
-                break;
+
             default:
                 return null;
         }
@@ -67,11 +65,9 @@ function Login() {
                             <h1 className="opacity">ورود</h1>
                             <form>
                                 <input type="tel" placeholder="شماره همراه" onChange={(e) => {
-                                    setQueryPropertyAddData("phoneNumber", e);
+                                    setQueryPropertyAddData("phone_number", e);
                                 }}/>
-                                <input type="password" placeholder="رمز عبور" onChange={(e) => {
-                                    setQueryPropertyAddData("password", e);
-                                }}/>
+
                                 <button className="opacity" onClick={handlerSubmit}>ورود</button>
                             </form>
                             <div className="register-forget opacity">

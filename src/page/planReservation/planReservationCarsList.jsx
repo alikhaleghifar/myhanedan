@@ -15,6 +15,13 @@ function replaceX(originalString, replacementString) {
 export const PlanReservationCarsList = () => {
 
     const [showModal, setShowModal] = useState(false)
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
             const [data, setData] = useState([])
 
@@ -26,7 +33,7 @@ export const PlanReservationCarsList = () => {
     const getData = () => {
         axios
             .post(`http://181.41.194.224:7070/user/show_cars/`,{
-                uid:1
+                uid:uid
             })
             .then((res) => {
                 setData(res.data.user_cars)

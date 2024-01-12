@@ -5,12 +5,19 @@ import point from "../assets/image/icon/point.png"
 import Confirm from "./modals/confirm";
 
 import {  toast } from 'react-toastify';
+import {useNavigate} from "react-router-dom";
 
 
 export default function HeaderHome() {
 
 
-
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
 
     const [wallet, setWallet] = useState({
@@ -31,7 +38,7 @@ export default function HeaderHome() {
     const getData = () => {
         axios
             .post(`http://181.41.194.224:7070/user/show_wallet/`,{
-                uid:1
+                uid:uid
             })
             .then((res) => {
                 setWallet(res.data)
@@ -46,7 +53,7 @@ export default function HeaderHome() {
     const handlerSubmit = (value) => {
         axios
             .post(`http://181.41.194.224:7070/user/deposit_wallet/`,{
-                uid:1,
+                uid:uid,
                 money:value
             })
             .then((res) => {
@@ -73,7 +80,9 @@ export default function HeaderHome() {
                         علی خالقی فر
                     </div>
                     <img width="30%" src={logo} alt={"logo"}/>
-                    <div className=" font-bold red-clr-bg white-clr bd-10 shadowBox p-2">
+                    <div className=" font-bold red-clr-bg white-clr bd-10 shadowBox p-2" onClick={()=>{
+                        navigate("/login")
+                    }}>
                         خروج
                     </div>
                 </div>

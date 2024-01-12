@@ -16,6 +16,13 @@ export const PlanReservation = () => {
 
     const {id} = useParams();
     const [data, setData] = useState([])
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
     useEffect(() => {
         getData()
@@ -49,7 +56,7 @@ export const PlanReservation = () => {
         axios
             .post(`http://181.41.194.224:7070/traffic_plan/buy/`,{
 
-            uid: 1,
+            uid: uid,
                 currency:currency,
             price: 1,
             tid: dataAdd,

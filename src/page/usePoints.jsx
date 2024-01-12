@@ -2,16 +2,24 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {NavbarPages} from "../components/navbarPages";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 export const UsePoints = () => {
 
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
 
     const handlerSubmit = (value) => {
         axios
             .post(`http://181.41.194.224:7070/user/pay_driver/`,{
 
-                uid: 1,
+                uid: uid,
                 currency:"token",
                 price: value,
                 driver_id: 1,
@@ -57,11 +65,11 @@ export const UsePoints = () => {
 
                             <p>
                                 امتیاز مورد نیاز:
-                               50
+                               9
                             </p>
 
                             <button className="btn-ok p-2 w-full m-2" onClick={() => {
-                                handlerSubmit(50)
+                                handlerSubmit(9)
                             }}>
                               پرداخت
                             </button>
@@ -93,11 +101,11 @@ export const UsePoints = () => {
 
                             <p>
                                 امتیاز مورد نیاز:
-                               70
+                               8
                             </p>
 
                             <button className="btn-ok p-2 w-full m-2" onClick={() => {
-                                handlerSubmit(70)
+                                handlerSubmit(8)
                             }}>
                               پرداخت
                             </button>

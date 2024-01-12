@@ -4,6 +4,7 @@ import {useCallback, useEffect, useRef, useState} from "react";
 
 import {useSpring, animated} from "react-spring";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 
 const AddCar = ({showModal, setShowModal,loadData}) => {
@@ -42,7 +43,15 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
 
     // END MODAL
 
-    const [data, setData] = useState({})
+    const [data, setData] = useState({plate_letter:"ا"})
+    const uid = JSON.parse(localStorage.getItem("uid"));
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!JSON.parse(localStorage.getItem("uid"))){
+            navigate("/login")
+        }
+    }, []);
+
 
     const setQueryPropertyData = (key, e) => {
         switch (key) {
@@ -71,7 +80,7 @@ const AddCar = ({showModal, setShowModal,loadData}) => {
     const handelerSubmit = () => {
         axios
             .post(`http://181.41.194.224:7070/user/add_car/`, {
-                uid: 1,
+                uid: uid,
                 vin: data.vin,
                 plate_serial:data.plate_serial1+"X"+ data.plate_serial2 +"-"+data.plate_serial3,
                 plate_letter:data.plate_letter
