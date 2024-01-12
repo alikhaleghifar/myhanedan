@@ -5,7 +5,17 @@ import {TrackerTransportation} from "./page/trackerTransportation";
 import "react-toastify/dist/ReactToastify.css";
 import {TransportPayment} from "./page/transportPayment";
 import StepCounter from "./page/stepCounter";
-// import 'leaflet/dist/leaflet.css';
+import {PlanReservationCarsList} from "./page/planReservation/planReservationCarsList";
+import {PlanReservation} from "./page/planReservation/planReservation";
+import {LinesPrice} from "./page/linesPrice";
+import {TimeTableStops} from "./page/timeTableStops";
+import {Events} from "./page/events";
+import {Infoforce} from "./page/infoforce";
+import {UsePoints} from "./page/usePoints";
+import Login from "./page/login";
+import Register from "./page/register";
+import ConfirmLogin from "./page/confirmLogin";
+
 function App() {
   return (
 <>
@@ -18,8 +28,16 @@ function App() {
       <Route path="/TrackerTransportation" element={<TrackerTransportation/>} />
       <Route path="/TransportPayment" element={<TransportPayment/>} />
       <Route path="/StepCounter" element={<StepCounter/>} />
-      {/*<Route path="/calculator" element={<Calculator/>} />*/}
-      {/*<Route path="/calculatorHome" element={<CalculatorHome/>} />*/}
+      <Route path="/PlanReservationCarsList" element={<PlanReservationCarsList/>} />
+      <Route path="/PlanReservation/:id" element={<PlanReservation/>} />
+      <Route path="/LinesPrice" element={<LinesPrice/>} />
+      <Route path="/TimeTableStops" element={<TimeTableStops/>} />
+      <Route path="/Events" element={<Events/>} />
+      <Route path="/Infoforce" element={<Infoforce/>} />
+      <Route path="/UsePoints" element={<UsePoints/>} />
+      <Route path="/login" element={<Login/>} />
+      <Route path="/Register" element={<Register/>} />
+      <Route path="/ConfirmLogin/:number" element={<ConfirmLogin/>} />
       {/*<Route path="/calculatorCar" element={<CalculatorCar/>} />*/}
       {/*<Route path="/calculatorPublicTransport" element={<CalculatorPublicTransport/>} />*/}
       {/*<Route path="/calculatorMotorBike" element={<CalculatorMotorBike/>} />*/}

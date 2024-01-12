@@ -1,47 +1,126 @@
-import React from 'react'
-import trackerTransportationImg from "../assets/image/icon/tracker.png"
+import React, {useEffect, useState} from 'react'
+import logo from "../assets/image/logo.png"
+import axios from "axios";
+import point from "../assets/image/icon/point.png"
+import Confirm from "./modals/confirm";
+
+import {  toast } from 'react-toastify';
+
 
 export default function HeaderHome() {
+
+
+
+
+
+    const [wallet, setWallet] = useState({
+        user_wallet: {
+            wallet_id: 1,
+            money_balance: 0,
+            token_balance: 0
+        }
+    })
+
+    const [showModal, setShowModal] = useState(false)
+
+    useEffect(() => {
+        getData()
+    }, []);
+
+
+    const getData = () => {
+        axios
+            .post(`http://181.41.194.224:7070/user/show_wallet/`,{
+                uid:1
+            })
+            .then((res) => {
+                setWallet(res.data)
+                // setLoading(false)
+            })
+            .catch((error) => {
+                // setLoading(false)
+
+            });
+    }
+
+    const handlerSubmit = (value) => {
+        axios
+            .post(`http://181.41.194.224:7070/user/deposit_wallet/`,{
+                uid:1,
+                money:value
+            })
+            .then((res) => {
+                getData()
+                toast.success("با موفقیت انجام شد", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            })
+            .catch((error) => {
+                // setLoading(false)
+                // setLoading(false)
+                toast.error("خطا در ارتباط با سرور", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            });
+    }
+
     return (
-        <div className="w-full green-low-clr-bg main-header-home p-4">
-            <div className="">
-                <p className="text-center font-bold">
-                    علی خالقی فر
-                </p>
-            </div>
-            <div className="flex w-full m-2 white-clr-bg bd-10 opacity-light">
-                <div className="flex-col w-50 flex justify-center">
-                    <p className="text-center p-2">
-                        موجودی
+        <>
+            <Confirm showModal={showModal} setShowModal={setShowModal} handelerSubmit={handlerSubmit} />
+            <div className="w-full  main-header-home p-4 relative flex justify-center pb-16">
+                <div className="w-full flex justify-between items-center">
+                    <div className=" font-bold white-clr-bg bd-10 shadowBox p-2">
+                        علی خالقی فر
+                    </div>
+                    <img width="30%" src={logo} alt={"logo"}/>
+                    <div className=" font-bold red-clr-bg white-clr bd-10 shadowBox p-2">
+                        خروج
+                    </div>
+                </div>
+                <div className="flex w-90   white-clr-bg bd-10  absolute p-1 mt-16 shadowBox">
+                    <div className="flex w-50 flex  items-center">
+                        <div className="flex justify-center items-center green-clr-bg white-clr m-1"
+                             style={{width: "30px", height: "30px", borderRadius: "50%"}}
+                        onClick={()=>{
+                            setShowModal(true);
+                        }}
+                        >
+                            +
+                        </div>
+                        <div className="flex flex-col">
+                            <p className="text-center p-2">
+                                موجودی کیف پول:
 
-                    </p>
-                    <p className="text-center p-2">
-                        555555555 هزار تومان
-                    </p>
-                </div>
-                <div className="w-50">
-                    <button className="w-full bd-10 border-none main-clr-bg white-clr p-2 h-full">
-                        افزایش موجودی
-                    </button>
-                </div>
-            </div>
-            <div className="flex w-full m-2 white-clr-bg bd-10 opacity-light">
-                <div className="flex-col w-50 flex justify-center">
-                    <p className="text-center p-2">
-                        امتیاز
+                            </p>
+                            <p className="text-center p-2">
+                                {wallet.user_wallet.money_balance} هزار تومان
+                            </p>
+                        </div>
 
-                    </p>
-                    <p className="text-center p-2">
-                        555555555
-                    </p>
-                </div>
-                <div className="w-50">
-                    <button className="w-full bd-10 border-none green-clr-bg white-clr p-2 h-full">
-                        استفاده از امتیاز
-                    </button>
-                </div>
-            </div>
+                    </div>
+                    <div className="m-2" style={{width: "2px", backgroundColor: "#b9b9b9"}}>
 
-        </div>
+                    </div>
+                    <div className="w-50">
+                        <div className="flex-col w-50 flex justify-center">
+                            <p className=" p-2">
+                                امتیازات
+                            </p>
+
+                            <div className="p-2 flex items-center">
+                                <img className="m-1" src={point} width={"20px"} alt={"icon"}/>
+                                <p className="m-1">
+                                    {wallet.user_wallet.token_balance}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </>
+
     )
 }

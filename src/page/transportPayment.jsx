@@ -2,6 +2,11 @@ import React from 'react'
 import QrReader from "react-qr-reader";
 import { useState } from "react";
 import axios from "axios";
+import {NavbarPages} from "../components/navbarPages";
+import {toast} from "react-toastify";
+
+
+
 export const TransportPayment = () => {
     const [code, setCode] = useState(null);
     const [showDialog, setDiaglog] = useState(false);
@@ -9,13 +14,20 @@ export const TransportPayment = () => {
     const [precScan, setPrecScan] = useState("");
     const [selected, setSelected] = useState("environment");
     const [errorMessage, setErrorMessage] = useState(null);
-
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(0);
 
     const handleScan = async (scanData) => {
-        console.log(`loaded data data`, scanData);
+
         if (scanData && scanData !== "" && !showDialog && !processing) {
-            console.log(`loaded >>>`, scanData);
-            setPrecScan(scanData);
+
+            if (scanData){
+                setProcessing(true)
+                setDiaglog(true)
+                setPrecScan(JSON.parse(scanData))
+                console.log(`loaded >>>`, scanData);
+            }
+
 
         }
     };
@@ -23,124 +35,151 @@ export const TransportPayment = () => {
         console.error(err);
     };
 
+    console.log(precScan)
+
+    const handlerSubmit = (currency) => {
+        axios
+            .post(`http://181.41.194.224:7070/user/pay_driver/`,{
+
+                uid: 1,
+                currency:currency,
+                price: currency === "token" ? precScan.price_token : precScan.price_money,
+                driver_id: precScan.driver_id,
+
+
+            })
+            .then((res) => {
+
+                if (res.data.status) {
+                    toast.success("پرداخت با موفقیت انجام شد", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+
+                    axios
+                        .post(`http://181.41.194.224:7070/drivers/five_star_comment/`,{
+
+                            stars:rating,
+                            driver_id: precScan.driver_id,
+
+
+                        })
+                        .then((res) => {
+
+
+                        })
+                        .catch((error) => {
+                            toast.error("پرداخت انجام نشد", {
+                                position: toast.POSITION.TOP_RIGHT,
+                            });
+                        });
+                }else {
+                    toast.error("موجودی کافی نیست", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+                // setLoading(false)
+            })
+            .catch((error) => {
+                toast.error("پرداخت انجام نشد", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            });
+    }
+
+
+
+
+    console.log(rating)
 
     return (
         <>
             <main className="w-full flex justify-center">
                 <div className="max-w-container w-full">
-
+                    <NavbarPages title={"پرداخت کرایه"} url={-1}/>
                     <div className="App">
-                        <h1>Hello CodeSandbox</h1>
-                        <h2>
-                            Last Scan:{precScan}
-                            {/*{selected}*/}
-                        </h2>
-                        <select onChange={(e) => setSelected(e.target.value)}>
-                            <option value={"environment"}>Back Camera</option>
-                            <option value={"user"}>Front Camera</option>
-                        </select>
-                        {showDialog && (
-                            <div className="dialog">
-                                <div className="dialog-content">
-                                    <div className="close">
-                                        <button
-                                            onClick={() => {
-                                                setCode(null);
-                                                setErrorMessage(null);
-                                                setDiaglog(false);
-                                                setProcessing(false);
-                                            }}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M6 18L18 6M6 6l12 12"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    {errorMessage && (
-                                        <div className="errorMessage">
-                                            <h2>{errorMessage}</h2>
-                                        </div>
-                                    )}
-                                    {code && (
-                                        <div className="description">
-                                            <h4 className="title">Scan Result</h4>
-                                            <div className="detail detail-first-child">
-                                                <h6 className="detail-header">Matricule :</h6>
-                                                <h6 className="detail-content green">{code.text}</h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Identité :</h6>
-                                                <h6 className="detail-content">{code.identite}</h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Pomotion :</h6>
-                                                <h6 className="detail-content">{code.promotion}</h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Année Academique :</h6>
-                                                <h6 className="detail-content">{code.annee}</h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Total payé :</h6>
-                                                <h6 className="detail-content red">
-                                                    {code.frais} (USD,dollars americains)
-                                                </h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Total prévu :</h6>
-                                                <h6 className="detail-content red">
-                                                    {code.total} (USD,dollars americains)
-                                                </h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Reste à payer :</h6>
-                                                <h6 className="detail-content red">
-                                                    {code.total - code.frais} (USD,dollars americains)
-                                                </h6>
-                                            </div>
-                                            <div className="detail">
-                                                <h6 className="detail-header">Votre Situation :</h6>
-                                                <h6
-                                                    className={
-                                                        code.total <= code.frais
-                                                            ? `detail-content green`
-                                                            : "detail-content red small"
-                                                    }
-                                                >
-                                                    {code.total <= code.frais
-                                                        ? "Eligible"
-                                                        : "Vous etes en retard de payement"}
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                        {!showDialog && !processing && (
+                            <>
+                                <h4>لطفا دوربین را مقابل QR قرار دهید</h4>
+
+                                <p className="mt-3">
+                                    نوع دوربین:
+                                </p>
+                                <select className="mb-3" onChange={(e) => setSelected(e.target.value)}>
+                                    <option value={"environment"}>دوربین عقب</option>
+                                    <option value={"user"}> دوربین جلو</option>
+                                </select>
+                            </>
+
                         )}
-                        {/* {code && <h2>{code.text}</h2>} */}
+
+
                         {!showDialog && !processing && (
                             <QrReader
                                 facingMode={selected}
                                 delay={500}
                                 onError={handleError}
                                 onScan={handleScan}
-                                // chooseDeviceId={()=>selected}
-                                style={{width: "200px", heigth: "100px"}}
+                                chooseDeviceId={() => selected}
+                                style={{width: "100%", heigth: "100px"}}
                             />
+                        )}
+
+                        {showDialog && processing && (
+                            <>
+
+                                <div className="flex flex-col w-full bd-10 shadowBox p-2 m-2">
+                                    <p>
+                                        نام و نام خانوادگی :
+                                        {precScan.name_surname}
+                                    </p>
+                                    <p>
+                                        قیمت:
+                                        {precScan.price_money}
+                                    </p>
+                                    <p>
+                                        قیمت با امتیاز:
+                                        {precScan.price_token}
+                                    </p>
+
+
+                                </div>
+
+<p>برای بهبود خدمات حمل و نقل لطفا امتیاز دهید</p>
+                                <div className="star-rating">
+                                    {[...Array(5)].map((star, index) => {
+                                        index += 1;
+                                        return (
+                                            <button
+                                                type="button"
+                                                key={index}
+                                                className={index <= (hover || rating) ? "on" : "off"}
+                                                onClick={() => setRating(index)}
+                                                onMouseEnter={() => setHover(index)}
+                                                onMouseLeave={() => setHover(rating)}
+                                            >
+                                                <span className="star">&#9733;</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                                <div className="flex w-full">
+                                    <button className="btn-ok w-50 m-2 p-2 font-bold" onClick={() => {
+                                        handlerSubmit("money")
+                                    }}>
+                                        پرداخت از کیف پول
+                                    </button>
+                                    <button className="btn-ok w-50 m-2 p-2 font-bold" onClick={() => {
+                                        handlerSubmit("token")
+                                    }}>
+                                        پرداخت از امتیازات
+                                    </button>
+                                </div>
+                            </>
+
                         )}
                     </div>
                 </div>
             </main>
         </>
-)
+    )
 }

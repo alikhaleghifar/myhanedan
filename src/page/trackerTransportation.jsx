@@ -8,6 +8,7 @@ import {divIcon} from "leaflet/src/layer";
 import config from "../api/config";
 import api from "../api/api";
 import {getToken} from "../api/auth";
+import {NavbarPages} from "../components/navbarPages";
 let Data = [];
 let carModel = [];
 let counterTrack = {};
@@ -880,11 +881,12 @@ export const TrackerTransportation = () => {
 
     return (
         <>
-            <div className="main-remote">
+            <div className="w-full flex justify-center">
 
 
 
-                    <div className="container-middle-location">
+                    <div className="max-w-container w-full">
+<NavbarPages title={"مشاهده آنلاین حمل و نقل"} url={-1}/>
                         <div className="middle-location">
                             <div className="options-map-location-container">
 
